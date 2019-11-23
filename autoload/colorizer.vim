@@ -30,7 +30,7 @@ function! s:Rgb2xterm(color) "{{{1
   let g = str2nr(a:color[3:4], 16)
   let b = str2nr(a:color[5:6], 16)
   let colortable = s:GetXterm2rgbTable()
-  for c in range(0,254)
+  for c in range(16,254)
     let d = pow(colortable[c][0]-r,2) + pow(colortable[c][1]-g,2) + pow(colortable[c][2]-b,2)
     if d<smallest_distance
       let smallest_distance = d
@@ -43,27 +43,10 @@ endfunction
 "" the 6 value iterations in the xterm color cube {{{1
 let s:valuerange = [0x00, 0x5F, 0x87, 0xAF, 0xD7, 0xFF]
 
-"" 16 basic colors {{{1
-let s:basic16 = [
-      \ [0x00, 0x00, 0x00], [0xCD, 0x00, 0x00],
-      \ [0x00, 0xCD, 0x00], [0xCD, 0xCD, 0x00],
-      \ [0x00, 0x00, 0xEE], [0xCD, 0x00, 0xCD],
-      \ [0x00, 0xCD, 0xCD], [0xE5, 0xE5, 0xE5],
-      \ [0x7F, 0x7F, 0x7F], [0xFF, 0x00, 0x00],
-      \ [0x00, 0xFF, 0x00], [0xFF, 0xFF, 0x00],
-      \ [0x5C, 0x5C, 0xFF], [0xFF, 0x00, 0xFF],
-      \ [0x00, 0xFF, 0xFF], [0xFF, 0xFF, 0xFF]]
-
 function! s:Xterm2rgb(color) "{{{1
-  " 16 basic colors
   let r = 0
   let g = 0
   let b = 0
-  if a:color<16
-    let r = s:basic16[a:color][0]
-    let g = s:basic16[a:color][1]
-    let b = s:basic16[a:color][2]
-  endif
 
   " color cube color
   if a:color>=16 && a:color<=232
